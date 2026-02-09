@@ -1,0 +1,138 @@
+{
+  "kind": "build_request",
+  "title": "Add fee-management app at /fees with 12-month tracking and Motoko storage",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-5",
+      "text": "Add an in-app route at the URL path \"/fees\" that renders a fee-management app while keeping the existing marketing landing page unchanged at \"/\".",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "recent-16",
+          "recent-19"
+        ],
+        "quotes": [
+          "Do you want the \"Fee App\" to be opened by ... 3. A separate URL like /fees",
+          "To add the fee‑management app at /fees, I will generate: • A new React page for /fees"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Visiting \"/\" shows the current Ganapati Coaching Centre marketing page with all existing sections and existing user-facing text unchanged.",
+        "Visiting \"/fees\" shows the fee-management app UI.",
+        "There is an in-UI navigation element that lets a user go from the marketing page to \"/fees\" and back to \"/\".",
+        "No edits are made to immutable frontend paths (including frontend/src/main.tsx and the auth/actor hooks)."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Implement the fee-management app UI at \"/fees\" with two modes: (1) Admin panel to add students with fields Name, Phone, and PIN; and (2) Student login using PIN to view a 12-month (Jan–Dec) paid/unpaid status card.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "recent-5",
+          "recent-8",
+          "recent-19",
+          "recent-20"
+        ],
+        "quotes": [
+          "Build the fee app with this website",
+          "• Admin panel to add students (Name, Phone, PIN) • Student login using PIN • Monthly fee card showing Paid / Unpaid",
+          "How many months should the fee tracker show? • 12 months (Jan to Dec)",
+          "12"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin panel supports creating a student record with Name, Phone, and PIN and shows a confirmation on success.",
+        "Student login screen accepts PIN and, on success, shows the logged-in student’s details and 12 months labeled Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec.",
+        "For a logged-in student, each month visibly indicates Paid or Unpaid.",
+        "All user-facing UI text added for the fee app is in English."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Enable admin actions to mark monthly fees as paid/unpaid for a selected student for each of the 12 months (Jan–Dec), and persist those changes.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "recent-8",
+          "recent-19",
+          "recent-20"
+        ],
+        "quotes": [
+          "• Admin can mark fees as paid",
+          "• Admin panel: add students (Name, Phone, PIN) • Student login by PIN • Monthly fee card • Motoko backend storage",
+          "12"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin can select an existing student and toggle each month’s status between Paid and Unpaid.",
+        "Toggling a month immediately updates the UI and remains consistent after a page refresh (persistence).",
+        "Students cannot change payment status from the student view (read-only)."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Implement a Motoko backend in backend/main.mo to store students and their 12-month fee status, and expose canister methods for: creating students, listing students for the admin UI, student PIN login, reading a student’s fee status, and updating a month’s paid/unpaid status.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "recent-15",
+          "recent-19"
+        ],
+        "quotes": [
+          "• Simple storage using Motoko backend",
+          "• Motoko backend storage"
+        ]
+      },
+      "acceptanceCriteria": [
+        "backend/main.mo is no longer empty and provides working canister methods needed by the fee app UI.",
+        "Data is stored in stable state so students and paid/unpaid statuses persist across canister upgrades.",
+        "Methods validate inputs (e.g., month index is within 0–11, PIN is non-empty) and return clear error results that the frontend can display in English."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Integrate the frontend fee app with the backend using the existing actor creation pattern (useActor hook) and React Query for loading/mutating students and fee statuses.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "recent-19"
+        ],
+        "quotes": [
+          "• Motoko backend storage"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All fee app data operations (create student, list students, login, update month status) call the Motoko canister via the existing actor setup.",
+        "React Query is used to fetch/cache fee app data and invalidate/refetch after mutations so the UI stays consistent.",
+        "The marketing landing page remains functional and visually unchanged."
+      ]
+    }
+  ],
+  "constraints": [
+    "Keep the existing marketing landing page layout, responsiveness, and all existing user-facing text unchanged.",
+    "Do not edit any files under frontend.immutablePaths (including frontend/src/main.tsx, frontend/src/hooks/useInternetIdentity.ts(x), frontend/src/hooks/useActor.ts, and frontend/src/components/ui).",
+    "Backend must remain single-actor architecture with all Motoko logic in backend/main.mo; create backend/migration.mo only if required for stable state upgrades.",
+    "Use 12 months Jan–Dec for fee tracking."
+  ],
+  "nonGoals": [
+    "Internet Identity-based role management or admin authentication (no requirement was provided for admin credentials).",
+    "Payments, receipts, invoicing, SMS/WhatsApp/email notifications, or real-time updates.",
+    "Changing the existing visual theme (teal/cyan + slate + mint) or replacing the existing Ganesh logo asset."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

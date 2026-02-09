@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 7,
+  "summary": "Responsive marketing website for Ganapati Coaching Centre (Belur) plus an added fee-management web app section for personal use, accessible at /fees, with admin student management and student PIN login to view monthly fee paid/unpaid status.",
+  "architectural_notes": [
+    "Implement as a static HTML + CSS page (no framework) with responsive layout using flex/grid and a sticky header.",
+    "Include a Ganesh logo asset (SVG/PNG) and integrate it into the header branding responsively (with accessible alt text).",
+    "Add a /fees route/page alongside the existing landing page (keep existing website unchanged).",
+    "Fee app requires persistent storage for students and monthly paid/unpaid statuses, plus a simple student authentication flow using phone + admin-set PIN."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-implement-a-responsive-single-page-marketing-website-for-ganapati-coaching-centre-using-react-tailwind-matching-the-structure-and-content-of-the-provided-html-sticky-header-with-site-name-and-a-prominent-call-now-6290060952-tel-cta-hero-section-with-boards-label-wbbse-cbse-icse-headline-achieve-academic-excellence-subtitle-admission-open-and-supporting-copy-our-classes-section-with-two-cards-class-v-to-x-all-subjects-class-xi-to-xii-arts-science-and-their-descriptions-why-choose-us-section-with-four-feature-items-and-checkmarks-meet-your-mentor-section-with-ayan-da-and-footer-contact-section-showing-phone-6290060952-and-location-belur-bazar-near-belur-girl-s-primary-school-and-copyright-2024-ganapati-coaching-centre-all-user-facing-text-must-be-in-english-exactly-as-specified",
+      "title": "Implement a responsive single-page marketing website for “Ganapati Coaching Centre” using React + Tailwind, matching the structure and content of the provided HTML: sticky header with site name and a prominent “Call Now: 6290060952” tel: CTA; Hero section with boards label “WBBSE | CBSE | ICSE”, headline “Achieve Academic Excellence”, subtitle “ADMISSION OPEN”, and supporting copy; “Our Classes” section with two cards (Class V to X: All Subjects; Class XI to XII: Arts & Science) and their descriptions; “Why Choose Us?” section with four feature items and checkmarks; “Meet Your Mentor” section with “Ayan Da”; and footer contact section showing phone 6290060952 and location “Belur Bazar (Near Belur Girl's Primary School)” and copyright “© 2024 Ganapati Coaching Centre”. All user-facing text must be in English exactly as specified.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-consistent-visual-theme-inspired-by-the-provided-html-styling-teal-cyan-primary-accent-dark-slate-text-and-a-light-mint-background-for-alternate-sections-use-a-clean-modern-typographic-hierarchy-clear-spacing-card-styling-with-subtle-shadows-and-consistent-section-widths-do-not-use-a-blue-purple-theme",
+      "title": "Apply a consistent visual theme inspired by the provided HTML styling: teal/cyan primary accent, dark slate text, and a light mint background for alternate sections; use a clean modern typographic hierarchy, clear spacing, card styling with subtle shadows, and consistent section widths. Do not use a blue/purple theme.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-a-ganesh-ganesha-logo-image-asset-consistent-with-the-existing-teal-cyan-dark-slate-mint-visual-theme-clean-modern-simple-mark-suitable-for-small-header-display",
+      "title": "Generate a Ganesh (Ganesha) logo image asset consistent with the existing teal/cyan + dark-slate + mint visual theme (clean, modern, simple mark suitable for small header display).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-generated-ganesh-logo-to-the-website-branding-in-the-sticky-header-next-to-the-text-ganapati-coaching-centre-keeping-the-current-layout-responsiveness-and-all-existing-user-facing-text-unchanged",
+      "title": "Add the generated Ganesh logo to the website branding in the sticky header next to the text “Ganapati Coaching Centre”, keeping the current layout, responsiveness, and all existing user-facing text unchanged.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-in-app-route-at-the-url-path-fees-that-renders-a-fee-management-app-while-keeping-the-existing-marketing-landing-page-unchanged-at",
+      "title": "Add an in-app route at the URL path \"/fees\" that renders a fee-management app while keeping the existing marketing landing page unchanged at \"/\".",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-fee-management-app-ui-at-fees-with-two-modes-1-admin-panel-to-add-students-with-fields-name-phone-and-pin-and-2-student-login-using-pin-to-view-a-12-month-jan-dec-paid-unpaid-status-card",
+      "title": "Implement the fee-management app UI at \"/fees\" with two modes: (1) Admin panel to add students with fields Name, Phone, and PIN; and (2) Student login using PIN to view a 12-month (Jan–Dec) paid/unpaid status card.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enable-admin-actions-to-mark-monthly-fees-as-paid-unpaid-for-a-selected-student-for-each-of-the-12-months-jan-dec-and-persist-those-changes",
+      "title": "Enable admin actions to mark monthly fees as paid/unpaid for a selected student for each of the 12 months (Jan–Dec), and persist those changes.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-the-frontend-fee-app-with-the-backend-using-the-existing-actor-creation-pattern-useactor-hook-and-react-query-for-loading-mutating-students-and-fee-statuses",
+      "title": "Integrate the frontend fee app with the backend using the existing actor creation pattern (useActor hook) and React Query for loading/mutating students and fee statuses.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Build a responsive single-page marketing website for Ganapati Coaching Centre (Belur) with header/call CTA, hero, classes, features, mentor, and contact footer.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Add a Ganesh (Ganesha) logo to the website branding (e.g., in the header/hero) while keeping the existing theme and layout.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Add a fee-management app within the existing site at /fees: admin can add students (name, phone, PIN) and mark monthly fees as paid/unpaid; students can log in with phone+PIN to view their own month-wise paid/unpaid status (12 months Jan–Dec).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Implement a Motoko backend in backend/main.mo to store students and their 12-month fee status, and expose canister methods for: creating students, listing students for the admin UI, student PIN login, reading a student’s fee status, and updating a month’s paid/unpaid status.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Ganapati Coaching Centre - Belur",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

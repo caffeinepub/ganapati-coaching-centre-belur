@@ -1,0 +1,14 @@
+{
+  "frontend/src/App.tsx": "Root application component with TanStack Router setup, QueryClientProvider, and route definitions for landing page (/) and fees page (/fees).",
+  "frontend/src/index.css": "Global styles with OKLCH color system defining teal/cyan primary accent, dark slate text, light mint backgrounds, and comprehensive theme tokens for both light and dark modes.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with custom color tokens (slate, mint) mapped to CSS variables, maintaining the existing structure while supporting the teal/cyan theme.",
+  "frontend/src/pages/LandingPage.tsx": "Marketing landing page component for Ganapati Coaching Centre with header (including Fee Management navigation button), hero section, classes cards, features list, mentor section, and contact footer; all existing content preserved.",
+  "frontend/src/pages/FeesPage.tsx": "Fee management page container with header, back-to-home navigation, and FeesApp component rendering the fee tracking system.",
+  "frontend/src/features/fees/FeesApp.tsx": "Fee tracking system shell with tabbed interface switching between Admin Panel and Student Login modes using shadcn Tabs component.",
+  "frontend/src/features/fees/AdminPanel.tsx": "Admin panel UI for creating students (Name, Phone, PIN), selecting existing students, and toggling monthly payment status with React Query integration and localStorage phone persistence.",
+  "frontend/src/features/fees/StudentPanel.tsx": "Student login interface using Student ID and PIN authentication, displaying logged-in student details and read-only monthly payment status.",
+  "frontend/src/features/fees/MonthStatusCard.tsx": "Reusable component displaying 12-month (Jan-Dec) payment status grid with interactive toggle buttons for admin mode and read-only badges for student view.",
+  "frontend/src/features/fees/months.ts": "Constants and helper functions for 12-month labels (Jan-Dec) and month indexing used across fee tracking components.",
+  "frontend/src/features/fees/phoneStore.ts": "LocalStorage utility functions for persisting and retrieving student phone numbers by student ID since backend doesn't store phone field.",
+  "frontend/src/features/fees/queries.ts": "React Query hooks for all fee app backend operations including fetching students, student login, creating students, and marking fees paid/unpaid with automatic cache invalidation."
+}

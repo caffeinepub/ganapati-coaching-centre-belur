@@ -1,0 +1,143 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Fee-management app route and UI at /fees with React Query + existing actor hook",
+  "requirements": [
+    {
+      "id": "REQ-5",
+      "summary": "Add a /fees in-app route while preserving the existing marketing landing page at /, and provide navigation between them without editing immutable paths.",
+      "acceptanceCriteria": [
+        "Visiting \"/\" shows the current Ganapati Coaching Centre marketing page with all existing sections and existing user-facing text unchanged.",
+        "Visiting \"/fees\" shows the fee-management app UI.",
+        "There is an in-UI navigation element that lets a user go from the marketing page to \"/fees\" and back to \"/\".",
+        "No edits are made to immutable frontend paths (including frontend/src/main.tsx and the auth/actor hooks)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/LandingPage.tsx",
+          "operation": "create",
+          "description": "Extract the existing marketing landing page JSX from frontend/src/App.tsx into a dedicated LandingPage component, keeping all existing user-facing text and sections unchanged."
+        },
+        {
+          "path": "frontend/src/pages/FeesPage.tsx",
+          "operation": "create",
+          "description": "Create the /fees page container that renders the fee-management app UI and includes an in-UI navigation element back to \"/\". Use shadcn-ui components for layout/navigation where appropriate; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Introduce app-level routing so \"/\" renders LandingPage and \"/fees\" renders FeesPage, while preserving the marketing page content unchanged. Add an in-UI navigation element (e.g., a header link/button) on the marketing page to navigate to \"/fees\" and keep existing marketing text intact. Use shadcn-ui components for the added navigation control(s) if available; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Build the /fees UI with Admin and Student modes: admin can add students (Name, Phone, PIN) and students can log in by PIN to view a Jan–Dec paid/unpaid card.",
+      "acceptanceCriteria": [
+        "Admin panel supports creating a student record with Name, Phone, and PIN and shows a confirmation on success.",
+        "Student login screen accepts PIN and, on success, shows the logged-in student’s details and 12 months labeled Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec.",
+        "For a logged-in student, each month visibly indicates Paid or Unpaid.",
+        "All user-facing UI text added for the fee app is in English."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/fees/months.ts",
+          "operation": "create",
+          "description": "Add a single source of truth for the 12 month labels (Jan–Dec) and any shared helpers for month indexing used by both Admin and Student views."
+        },
+        {
+          "path": "frontend/src/features/fees/FeesApp.tsx",
+          "operation": "create",
+          "description": "Implement the fee-management app shell with two modes (Admin, Student), using shadcn-ui Tabs (or equivalent) to switch modes. Ensure all new UI text is in English. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/fees/AdminPanel.tsx",
+          "operation": "create",
+          "description": "Implement the Admin panel UI to add students with Name, Phone, and PIN inputs, show a success confirmation on creation, and display any errors in English. Use shadcn-ui Form/Input/Button/Card components (or equivalents) for consistent UI; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/fees/StudentPanel.tsx",
+          "operation": "create",
+          "description": "Implement the Student login UI using PIN and, upon success, render the logged-in student details and a 12-month Jan–Dec paid/unpaid status display (read-only). Use shadcn-ui Input/Button/Card components (or equivalents); verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/fees/MonthStatusCard.tsx",
+          "operation": "create",
+          "description": "Create a reusable month-status card/grid component that renders the Jan–Dec labels and Paid/Unpaid states for a student, supporting a read-only mode for the student view. Use shadcn-ui Badge/Card/Button (or equivalents) for clear status indicators; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/fees/phoneStore.ts",
+          "operation": "create",
+          "description": "Add a small frontend-only persistence helper (e.g., localStorage) to retain the Phone field by student id for display in the Admin UI, since the current frontend backend type surface does not include phone. Keep all user-facing strings in English."
+        },
+        {
+          "path": "frontend/src/pages/FeesPage.tsx",
+          "operation": "modify",
+          "description": "Wire FeesApp into FeesPage, ensuring the /fees page renders the two-mode UI and provides back-navigation to \"/\". Use shadcn-ui components for page layout elements if needed; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Allow admins to select a student and toggle each month’s Paid/Unpaid status with immediate UI updates and persistence, while keeping the student view read-only.",
+      "acceptanceCriteria": [
+        "Admin can select an existing student and toggle each month’s status between Paid and Unpaid.",
+        "Toggling a month immediately updates the UI and remains consistent after a page refresh (persistence).",
+        "Students cannot change payment status from the student view (read-only)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/fees/AdminPanel.tsx",
+          "operation": "modify",
+          "description": "Add UI to list/select an existing student and render month toggles (Jan–Dec) that switch Paid/Unpaid for the selected student. Implement immediate UI updates (optimistic state via React Query cache) and show clear English feedback for success/error. Use shadcn-ui Table/Select/Button/Badge components (or equivalents) for selection and toggles; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/fees/MonthStatusCard.tsx",
+          "operation": "modify",
+          "description": "Support an interactive admin mode (toggleable months) and a read-only student mode. Ensure the student mode does not expose any click handlers or mutation triggers. Use shadcn-ui components for consistent visuals; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/features/fees/StudentPanel.tsx",
+          "operation": "modify",
+          "description": "Ensure the student view renders MonthStatusCard strictly in read-only mode and does not provide any controls to change payment status."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Integrate the fee app UI with the Motoko canister via the existing useActor hook and React Query for fetching, caching, and mutations with invalidation.",
+      "acceptanceCriteria": [
+        "All fee app data operations (create student, list students, login, update month status) call the Motoko canister via the existing actor setup.",
+        "React Query is used to fetch/cache fee app data and invalidate/refetch after mutations so the UI stays consistent.",
+        "The marketing landing page remains functional and visually unchanged."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/fees/queries.ts",
+          "operation": "create",
+          "description": "Create React Query hooks for fee app data: fetching students for admin, fetching a selected student (if needed), and any derived cached data needed by the UI. Use the existing useActor hook (from core-infrastructure patterns) to access the canister actor; do not modify immutable auth/actor hook files."
+        },
+        {
+          "path": "frontend/src/features/fees/mutations.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hooks for fee operations: create student, student PIN login, and mark month paid/unpaid. Ensure mutations invalidate/refetch relevant queries so the UI stays consistent after changes."
+        },
+        {
+          "path": "frontend/src/features/fees/AdminPanel.tsx",
+          "operation": "modify",
+          "description": "Connect the Admin UI to the React Query hooks: list students, create student, and toggle month paid/unpaid using the mutation hooks with invalidation/optimistic updates. Ensure errors from canister calls are displayed in English."
+        },
+        {
+          "path": "frontend/src/features/fees/StudentPanel.tsx",
+          "operation": "modify",
+          "description": "Connect the Student login flow to the React Query mutation/query hooks: perform login and, on success, load/display the student’s fee status using cached data. Ensure the view remains read-only and errors are displayed in English."
+        },
+        {
+          "path": "frontend/src/features/fees/FeesApp.tsx",
+          "operation": "modify",
+          "description": "Wire AdminPanel and StudentPanel into the FeesApp shell, ensuring React Query-driven loading/error states are handled and the UI stays consistent after mutations."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-add-an-in-app-route-at-the-url-path-fees-that-renders-a-fee-management-app-while-keeping-the-existing-marketing-landing-page-unchanged-at",
+      "featureTitle": "Add an in-app route at the URL path \"/fees\" that renders a fee-management app while keeping the existing marketing landing page unchanged at \"/\".",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/FeesPage.tsx",
+        "frontend/src/pages/LandingPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-fee-management-app-ui-at-fees-with-two-modes-1-admin-panel-to-add-students-with-fields-name-phone-and-pin-and-2-student-login-using-pin-to-view-a-12-month-jan-dec-paid-unpaid-status-card",
+      "featureTitle": "Implement the fee-management app UI at \"/fees\" with two modes: (1) Admin panel to add students with fields Name, Phone, and PIN; and (2) Student login using PIN to view a 12-month (Jan–Dec) paid/unpaid status card.",
+      "files": [
+        "frontend/src/features/fees/AdminPanel.tsx",
+        "frontend/src/features/fees/FeesApp.tsx",
+        "frontend/src/features/fees/MonthStatusCard.tsx",
+        "frontend/src/features/fees/StudentPanel.tsx",
+        "frontend/src/features/fees/months.ts",
+        "frontend/src/features/fees/phoneStore.ts",
+        "frontend/src/pages/FeesPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-enable-admin-actions-to-mark-monthly-fees-as-paid-unpaid-for-a-selected-student-for-each-of-the-12-months-jan-dec-and-persist-those-changes",
+      "featureTitle": "Enable admin actions to mark monthly fees as paid/unpaid for a selected student for each of the 12 months (Jan–Dec), and persist those changes.",
+      "files": [
+        "frontend/src/features/fees/AdminPanel.tsx",
+        "frontend/src/features/fees/MonthStatusCard.tsx",
+        "frontend/src/features/fees/StudentPanel.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-integrate-the-frontend-fee-app-with-the-backend-using-the-existing-actor-creation-pattern-useactor-hook-and-react-query-for-loading-mutating-students-and-fee-statuses",
+      "featureTitle": "Integrate the frontend fee app with the backend using the existing actor creation pattern (useActor hook) and React Query for loading/mutating students and fee statuses.",
+      "files": [
+        "frontend/src/features/fees/AdminPanel.tsx",
+        "frontend/src/features/fees/FeesApp.tsx",
+        "frontend/src/features/fees/StudentPanel.tsx",
+        "frontend/src/features/fees/queries.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

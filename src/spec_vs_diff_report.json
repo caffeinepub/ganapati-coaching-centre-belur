@@ -1,0 +1,92 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-09T08:07:24.997Z",
+  "summary": "The diff adds a /fees route with a tabbed fee-management UI (admin + student) and React Query hooks calling new Motoko canister methods. However, several backend requirements (stable persistence, input validation with English error results) are not met, and the student login flow does not match the requested “PIN-only” login. Some unrequested features/methods were also introduced (e.g., getAllFees, localStorage phone persistence).",
+  "missing_requirements": [
+    {
+      "id": "REQ-6",
+      "requirement": "Student login using PIN (only) to view a 12-month (Jan–Dec) paid/unpaid status card.",
+      "reason": "The implemented StudentPanel requires both Student ID and PIN; there is no PIN-only login flow.",
+      "evidence": [
+        "frontend/src/features/fees/StudentPanel.tsx"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Admin panel adds students with fields Name, Phone, and PIN (with the student record created accordingly).",
+      "reason": "The UI collects Phone, but backend createStudent only accepts (name, pin) and Student type has no phone field; phone is stored only in localStorage, not in Motoko storage.",
+      "evidence": [
+        "frontend/src/features/fees/AdminPanel.tsx",
+        "frontend/src/features/fees/phoneStore.ts",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "requirement": "Store students and fee statuses in stable state so they persist across canister upgrades (single-actor, Motoko logic in backend/main.mo; migration.mo only if required).",
+      "reason": "backend/main.mo uses non-stable vars (e.g., nextId) and an in-memory Map without any stable storage or upgrade hooks; no migration.mo shown.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "requirement": "Methods validate inputs (e.g., month index within 0–11, PIN non-empty) and return clear error results that the frontend can display in English.",
+      "reason": "Backend uses Runtime.trap for errors (e.g., invalid month, student not found) and returns plain Bool/() rather than a clear English error result type; no PIN non-empty validation is present (Nat pin can be 0).",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "requirement": "Toggling a month remains consistent after a page refresh (persistence).",
+      "reason": "Because backend state is not stored in stable variables, persistence across upgrades is not implemented; additionally, phone is stored only client-side. The AC explicitly requires persistence, and the diff does not show stable persistence implementation.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/features/fees/phoneStore.ts"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Student login requires Student ID + PIN (instead of PIN-only).",
+      "reason": "BuildRequest specifies student login using PIN; the diff introduces an additional Student ID credential field and flow.",
+      "evidence": [
+        "frontend/src/features/fees/StudentPanel.tsx"
+      ]
+    },
+    {
+      "description": "Phone number is persisted in browser localStorage keyed by studentId.",
+      "reason": "BuildRequest requires Motoko storage for student data; localStorage-based phone persistence is an unrequested workaround and is not Motoko-backed storage.",
+      "evidence": [
+        "frontend/src/features/fees/phoneStore.ts",
+        "frontend/src/features/fees/AdminPanel.tsx",
+        "frontend/src/features/fees/StudentPanel.tsx"
+      ]
+    },
+    {
+      "description": "Backend method getAllFees() exposed.",
+      "reason": "Not requested in REQ-8 (requested methods: create students, list students, student PIN login, read student fee status, update month status).",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "confidence": 0.78,
+  "changed_files": [
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/src/App.tsx",
+    "frontend/src/features/fees/AdminPanel.tsx",
+    "frontend/src/features/fees/FeesApp.tsx",
+    "frontend/src/features/fees/MonthStatusCard.tsx",
+    "frontend/src/features/fees/StudentPanel.tsx",
+    "frontend/src/features/fees/months.ts",
+    "frontend/src/features/fees/phoneStore.ts",
+    "frontend/src/features/fees/queries.ts",
+    "frontend/src/pages/FeesPage.tsx",
+    "frontend/src/pages/LandingPage.tsx",
+    "project_state.json"
+  ]
+}
